@@ -1,0 +1,33 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "predev": "kill-port 5000",
+    "dev": "nodemon --watch src src/server.js",
+    "start": "node src/server.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "data/*",
+      "uploads/*",
+      "uploads/**/*"
+    ]
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "ecommerce-app-workspace": "file:..",
+    "express": "^4.21.2",
+    "express-validator": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "kill-port": "^2.0.1",
+    "nodemon": "^3.1.10"
+  }
+}
