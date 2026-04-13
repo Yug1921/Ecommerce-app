@@ -21,6 +21,7 @@ git push -u origin main
   - `JWT_SECRET=<strong-secret>`
   - `JWT_EXPIRES_IN=1d`
   - `FRONTEND_URL=<your-frontend-domain>`
+    - Example: `FRONTEND_URL=https://ecommerce-app-one-cyan.vercel.app`
 
 ## 3. Deploy Frontend (Vercel/Netlify)
 
@@ -29,6 +30,10 @@ git push -u origin main
 - Output Directory: `build`
 
 If needed later, add `REACT_APP_API_BASE_URL` in frontend and point your API service to backend URL.
+
+Frontend environment variable is required:
+
+- `REACT_APP_API_BASE_URL=https://<your-backend-domain>`
 
 ## 4. Postman Testing
 

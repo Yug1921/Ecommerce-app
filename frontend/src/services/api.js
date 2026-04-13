@@ -41,21 +41,29 @@ export const getCatalogProducts = () => backendAPI.get('/products');
 export const getCatalogProduct = (id) => backendAPI.get(`/products/${id}`);
 
 export const getStorefrontProducts = async () => {
-  const [remoteProductsResponse, customProductsResponse] = await Promise.all([
+  const [remoteResult, customResult] = await Promise.allSettled([
     getProducts(),
     getCatalogProducts()
   ]);
 
-  const customProducts = customProductsResponse.data.data.products.map((product) => ({
-    ...product,
-    image: normalizeImageUrl(product.image),
-    source: 'custom'
-  }));
+  const remoteProducts = remoteResult.status === 'fulfilled'
+    ? remoteResult.value.data.map((product) => ({
+        ...product,
+        source: 'remote'
+      }))
+    : [];
 
-  const remoteProducts = remoteProductsResponse.data.map((product) => ({
-    ...product,
-    source: 'remote'
-  }));
+  const customProducts = customResult.status === 'fulfilled'
+    ? customResult.value.data.data.products.map((product) => ({
+        ...product,
+        image: normalizeImageUrl(product.image),
+        source: 'custom'
+      }))
+    : [];
+
+  if (remoteProducts.length === 0 && customProducts.length === 0) {
+    throw new Error('Unable to load products');
+  }
 
   return [...customProducts, ...remoteProducts];
 };
